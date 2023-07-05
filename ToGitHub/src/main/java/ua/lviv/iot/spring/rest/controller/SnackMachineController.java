@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.lviv.iot.spring.rest.model.Menu;
 import ua.lviv.iot.spring.rest.model.SnackMachine;
 import ua.lviv.iot.spring.rest.service.Service;
 import ua.lviv.iot.spring.rest.service.SnackMachineService;
@@ -49,16 +50,15 @@ public class SnackMachineController {
     @Setter
     private static class SnackMachineUpdateRequest {
         private String address;
-        private List<String> menu;
-        private List<String> existingTrademarkOfSnacks;
-        private Map<String, Integer>  existingSnacks;
-        private Map<String, Integer>  soldedSnacks;
+        private Menu menu;
+        private Map<Integer, Integer>  existingSnacks;
+        private Map<Integer, Integer>  soldedSnacks;
 
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateSnackMachine(@PathVariable("id") Integer id, @RequestBody SnackMachineUpdateRequest request) {
-        snackMachineService.updateSnackMachine(id, request.getAddress(), request.getMenu(), request.getExistingTrademarkOfSnacks(), request.getExistingSnacks(), request.getSoldedSnacks());
+        snackMachineService.updateSnackMachine(id, request.getAddress(), request.getMenu(), request.getExistingSnacks(), request.getSoldedSnacks());
         return ResponseEntity.ok("Snack machine updated successfully");
     }
 

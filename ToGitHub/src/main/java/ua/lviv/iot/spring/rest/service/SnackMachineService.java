@@ -3,6 +3,7 @@ package ua.lviv.iot.spring.rest.service;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ua.lviv.iot.spring.rest.model.Menu;
 import ua.lviv.iot.spring.rest.model.SnackMachine;
 import ua.lviv.iot.spring.rest.writer.SnackMachineWriter;
 
@@ -46,12 +47,11 @@ public class SnackMachineService implements ua.lviv.iot.spring.rest.service.Serv
         return new LinkedList<>(snackMachineMap.values());
     }
 
-    public void updateSnackMachine(Integer id, String address, List<String> menu, List<String>  existingTrademarkOfSnacks, Map<String, Integer>  existingSnacks, Map<String, Integer>  soldedSnacks) {
+    public void updateSnackMachine(Integer id, String address, Menu menu, Map<Integer, Integer>  existingSnacks, Map<Integer, Integer>  soldedSnacks) {
         SnackMachine snackMachine = snackMachineMap.get(id);
         if (snackMachine != null) {
             snackMachine.setAddress(address);
             snackMachine.setMenu(menu);
-            snackMachine.setExistingTrademarkOfSnacks(existingTrademarkOfSnacks);
             snackMachine.setExistingSnacks(existingSnacks);
             snackMachine.setSoldedSnacks(soldedSnacks);
             snackMachineMap.put(id, snackMachine);

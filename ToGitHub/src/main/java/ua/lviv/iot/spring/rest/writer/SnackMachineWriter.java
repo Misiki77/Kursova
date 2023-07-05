@@ -3,6 +3,7 @@ package ua.lviv.iot.spring.rest.writer;
 import com.opencsv.CSVWriter;
 import lombok.Getter;
 import lombok.Setter;
+import ua.lviv.iot.spring.rest.model.Menu;
 import ua.lviv.iot.spring.rest.model.SnackMachine;
 
 import java.io.BufferedWriter;
@@ -15,19 +16,8 @@ import java.util.Map;
 
 public class SnackMachineWriter extends SnackMachine {
 
-    public static String mapToString(Map<String, Integer> map) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            stringBuilder.append(entry.getKey())
-                    .append(": ")
-                    .append(entry.getValue())
-                    .append(", ");
-        }
-        if (stringBuilder.length() > 0) {
-            stringBuilder.setLength(stringBuilder.length() - 2); // Видаляємо останню кому та пробіли
-        }
-        return stringBuilder.toString();
-    }
+
+
     public void writeAllObjectsToCSV(Map<Integer, SnackMachine> SnackMachines, String folderpath) throws IOException {
         DateTimeFormatter formatterForFileNaming = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate currentDate = LocalDate.now();
@@ -41,12 +31,11 @@ public class SnackMachineWriter extends SnackMachine {
 
             int id = snackMachine.getId();
             String address = snackMachine.getAddress();
-            List<String> menu = snackMachine.getMenu();
-            List<String> exsistingMarks = snackMachine.getExistingTrademarkOfSnacks();
-            Map<String, Integer> exsistingSnacks = snackMachine.getExistingSnacks();
-            Map<String, Integer> soldedSnacks = snackMachine.getSoldedSnacks();
+            Menu menu = snackMachine.getMenu();
+            Map<Integer, Integer> exsistingSnacks = snackMachine.getExistingSnacks();
+            Map<Integer, Integer> soldedSnacks = snackMachine.getSoldedSnacks();
 
-            String line = id + "," + address+ "," + menu + "," + exsistingMarks + "," + exsistingSnacks + "," + soldedSnacks + ",";
+            String line = id + "," + address+ "," + menu + "," + exsistingSnacks + "," + soldedSnacks + ",";
 
             writer.write("Snack Machine");
             writer.newLine();
